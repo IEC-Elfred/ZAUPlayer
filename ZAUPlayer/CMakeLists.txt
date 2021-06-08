@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.8)
+find_package(Threads)
+aux_source_directory(. DIR_SRCS)
+include_directories(../)
+include_directories(../3rdpart/ffmpeg/include)
+include_directories(../3rdpart/ffmpeg/lib)
+add_executable(ZAUPlayer ZAUPlayer.cpp)
+target_link_libraries(ZAUPlayer ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(ZAUPlayer MThread)
+target_link_libraries(ZAUPlayer MMAV)
+target_link_libraries(ZAUPlayer avcodec)
+target_link_libraries(ZAUPlayer avformat)
+target_link_libraries(ZAUPlayer avutil)
+target_link_libraries(ZAUPlayer swresample)
+target_link_libraries(ZAUPlayer swscale)
+# target_link_libraries(ZAUPlayer libavcodec)
+# target_link_libraries(ZAUPlayer libavformat)
+# target_link_libraries(ZAUPlayer libavutil)
+# target_link_libraries(ZAUPlayer libswresample)
+# target_link_libraries(ZAUPlayer libswscale)
+
+
+
