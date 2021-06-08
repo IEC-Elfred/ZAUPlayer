@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
-project(zauberflote)
-
+project("zauberflote")
+set(CMAKE_BUILD_TYPE "Debug")
+set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
+set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 add_subdirectory("ZAUPlayer")
-add_subdirectory("MThread")
+add_subdirectory("MMThread")
 add_subdirectory("MMAV")

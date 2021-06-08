@@ -1,8 +1,12 @@
-cmake_minimum_required(VERSION 3.8)
-aux_source_directory(. DIR_LIB_SRCS)
+cmake_minimum_required (VERSION 3.8)
+
 include_directories(../3rdpart/ffmpeg/include)
+
 add_library(
-    MMAV
-    MMAVReader.cpp
-    MMAVPacket.cpp
+	MMAV
+	MMAVReader.cpp
+	MMAVPacket.cpp
+	MMAVDecoder.cpp
+	MMAVStream.cpp
+	MMAVFrame.cpp
 )
