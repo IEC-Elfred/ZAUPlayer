@@ -12,3 +12,4 @@ Makefile
 tor.mkv
 *.a
 *.mp4
+*.yuv

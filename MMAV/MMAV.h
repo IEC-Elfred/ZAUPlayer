@@ -1,4 +1,4 @@
-#pragma once
+
 #include <cstdio>
 
 class MMAVStreamPrivate;
@@ -11,7 +11,6 @@ class MMAVPacket
 public:
 	MMAVPacket();
 	~MMAVPacket();
-
 	int GetIndex();
 public:
 	MMAVPacketPrivate* imp = nullptr;
