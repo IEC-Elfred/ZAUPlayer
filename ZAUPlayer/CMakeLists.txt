@@ -8,7 +8,7 @@ find_package(Threads)
 link_directories(../3rdpart/ffmpeg/lib)
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (ZAUPlayer "ZAUPlayer.cpp" )
+add_library(ZAUPlayer "ZAUPlayer.cpp" ZAUPlayer.h ZAUPlayerReaderThread.cpp ZAUPlayerDecoderThread.cpp)
 
 target_link_libraries(ZAUPlayer MMThread)
 target_link_libraries(ZAUPlayer MMAV)
