@@ -9,4 +9,5 @@ add_library(
 	MMAVDecoder.cpp
 	MMAVStream.cpp
 	MMAVFrame.cpp
+	MMAVTime.cpp
 )

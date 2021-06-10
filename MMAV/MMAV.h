@@ -32,6 +32,7 @@ public:
 	int GetY(unsigned char* y);
 	int GetU(unsigned char* u);
 	int GetV(unsigned char* v);
+  long long GetPts();
 
 public:
 	MMAVFramePrivate* imp = nullptr;
@@ -59,6 +60,8 @@ public:
 
 	int Read(MMAVPacket * packet);
 
+  int Seek(double time);
+
 private:
 	MMAVReaderPrivate* imp = nullptr;
 };
@@ -72,6 +75,8 @@ public:
 	~MMAVStream();
 public:
 	int streamIndex = -1;
+  int timebaseDen = 0;
+  int timebaseNum = 0;
 	MMAVStreamPrivate* imp = nullptr;
 };
 
@@ -94,4 +99,13 @@ public:
 
 private:
 	MMAVDecoderPrivate* imp = nullptr;
+  int timebaseDen = 0;
+  int timebaseNum = 0;
 };
+
+class MMAVTime{
+	public:
+		static long long GetTime();
+};
+
+

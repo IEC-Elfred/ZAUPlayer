@@ -4,6 +4,9 @@
 #include "MMAVPacketPrivate.h"
 #include "MMAVDecoderPrivate.h"
 #include "MMAVStreamPrivate.h"
+#include "libavformat/avformat.h"
+#include "libavutil/avutil.h"
+#include <bits/stdint-intn.h>
 
 MMAVReader::MMAVReader()
 {
@@ -47,6 +50,11 @@ int MMAVReader::GetStream(MMAVStream* avStream, int streamId)
 {
 	AVStream* ffmpegStream = imp->formatCtx->streams[streamId];
 
+  //ffmpegStream->time_base
+  avStream->timebaseNum = ffmpegStream->time_base.num;
+
+  avStream->timebaseDen = ffmpegStream->time_base.den;
+
 	avStream->streamIndex = ffmpegStream->index;
 
 	avcodec_parameters_copy(avStream->imp->codecpar, ffmpegStream->codecpar);
@@ -80,4 +88,15 @@ int MMAVReader::Read(MMAVPacket* packet)
 	}
 	int ret = av_read_frame(imp->formatCtx, packet->imp->pkt);
 	return ret;
+}
+
+int MMAVReader::Seek(double time)
+{
+  	if (imp->formatCtx == nullptr) {
+		return -1;
+	}
+
+	int64_t timestamp = (int64_t)(time * AV_TIME_BASE);
+	av_seek_frame(imp->formatCtx, -1, timestamp, AVSEEK_FLAG_BACKWARD);
+	return 0;
 }

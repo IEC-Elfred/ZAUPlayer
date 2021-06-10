@@ -9,4 +9,5 @@ class MMAVFramePrivate
 {
 public:
 	AVFrame* frame = nullptr;
+  double ptsSec = 0.0;
 };

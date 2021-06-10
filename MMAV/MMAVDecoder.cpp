@@ -27,6 +27,8 @@ MMAVDecoder::~MMAVDecoder()
 
 int MMAVDecoder::Init(MMAVStream* stream)
 {
+  timebaseNum = stream->timebaseNum;
+  timebaseDen = stream->timebaseDen;
 	avcodec_parameters_to_context(imp->codecContext, stream->imp->codecpar);
 	const AVCodec * avCodec = avcodec_find_decoder(imp->codecContext->codec_id);
 
@@ -56,6 +58,10 @@ int MMAVDecoder::SendPacket(MMAVPacket* pkt)
 int MMAVDecoder::RecvFrame(MMAVFrame* frame)
 {
 	int ret = avcodec_receive_frame(imp->codecContext, frame->imp->frame);
+  if (!ret) {
+    //将秒级时间戳计算并且赋值
+    frame->imp->ptsSec = 1.0*frame->imp->frame->pts*timebaseNum/timebaseDen;
+  }
 	return ret;
 }
 

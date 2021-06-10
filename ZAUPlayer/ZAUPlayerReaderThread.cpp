@@ -1,8 +1,10 @@
 #include "ZAUPlayer.h"
 #include <iostream>
 
-ZAUPlayerReaderThread::ZAUPlayerReaderThread(std::string _path) {
+ZAUPlayerReaderThread::ZAUPlayerReaderThread(std::string _path, double _seekTime, ZAUPlayerController* _playerCtr) {
+  playerCtr = _playerCtr;
   path = _path;
+  seekTime = _seekTime;
 }
 
 ZAUPlayerReaderThread::~ZAUPlayerReaderThread() {}
@@ -13,10 +15,13 @@ void ZAUPlayerReaderThread::run() {
   if (ret) {
     return;
   }
+
+  reader.Seek(seekTime);
+  
   int videoStreamIndex = reader.GetVideoStreamIndex();
   int audioStreamIndex = reader.GetAudioStreamIndex();
-  ZAUPlayerDecoderThread *videoDecoderThread = new ZAUPlayerDecoderThread();
-  ZAUPlayerDecoderThread *audioDecoderThread = new ZAUPlayerDecoderThread();
+  ZAUPlayerDecoderThread *videoDecoderThread = new ZAUPlayerDecoderThread(playerCtr,ZAUDecoderType::ZAUDECODER_TYPE_VIDEO);
+  ZAUPlayerDecoderThread *audioDecoderThread = new ZAUPlayerDecoderThread(playerCtr,ZAUDecoderType::ZAUDECODER_TYPE_AUDIO);
 
   //初始化解码器
   if (videoStreamIndex >= 0) {

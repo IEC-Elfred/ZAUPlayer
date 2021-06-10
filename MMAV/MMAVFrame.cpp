@@ -1,6 +1,7 @@
 #include "MMAV.h"
 
 #include "MMAVFramePrivate.h"
+#include <iostream>
 
 extern "C"
 {
@@ -110,4 +111,10 @@ int MMAVFrame::GetV(unsigned char* v)
 		memcpy(v + i * width, imp->frame->data[2] + i * imp->frame->linesize[2], width);
 	}
 	return 0;
+}
+
+long long MMAVFrame::GetPts()
+{
+  
+  return (long long) (imp->ptsSec*1000);
 }
